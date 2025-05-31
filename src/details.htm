@@ -70,6 +70,68 @@
                     </div>
                 </div>
             </nav>
+            <div id="hamburger" class="md:hidden fixed bottom-5 left-5 z-20 p-4 flex items-center justify-center rounded-full 
+                                bg-[rgba(135,52,52,0.4)] border-1 border-white cursor-pointer">
+                <i class="fa-solid fa-bars text-white text-2xl"></i>
+            </div>
+            <div id="menuOverlay" class="fixed inset-0 bg-[rgba(0,0,0,0.5)] z-30 hidden"></div>
+            <div id="burgerMenu"
+                class="fixed bottom-0 left-0 w-full bg-[#353535e9] z-40 rounded-t-3xl p-6 
+                        transform translate-y-full transition-transform duration-300">
+                <div class="text-lg text-zinc-700 gap-4 p-4 grid grid-cols-2">
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-start p-4">
+                        <img src="../img/glasses.webp" class="h-[40px] mr-3" alt="glasses">
+                        <span>Profil</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-start p-4">
+                        <img src="../img/ticket.webp" class="h-[40px] mr-3" alt="ticket">
+                        <span>Mənim Biletlərim</span>
+                    </div>            
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-center p-4 col-span-2">
+                        <img src="../img/film.webp" class="h-[40px] mr-3" alt="film icon">
+                        <span>Kinoteatrlar</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-center p-4 col-span-2">
+                        <img src="../img/alarm.webp" class="h-[40px] mr-3" alt="alarm icon">
+                        <span>Aksiyalar</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-start p-4">
+                        <img src="../img/call.svg" class="h-[40px] mr-3" alt="contact">
+                        <span>Əlaqə</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-start p-4">
+                        <img src="../img/faq.svg" class="h-[40px] mr-3" alt="faq">
+                        <span>FAQ</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-start p-4 sm:col-span-1">
+                        <img src="../img/terms.svg" class="h-[40px] mr-3" alt="terms">
+                        <span>Hüquqi Şərtlər</span>
+                    </div>
+                    <div class="bg-[#dbdbdb] rounded-xl flex items-center justify-center p-4 sm:col-span-1">
+                        <img src="../img/google-play.svg" alt="Google Play" class="h-full">
+                    </div>
+                </div>
+                <div id="language_switcher" class="md:flex">
+                    <div onclick="rotateChevron(this)" class="relative inline-block text-left">
+                        <div class="dropdown flex items-center cursor-pointer">
+                            <img src="../img/az-flag.svg" alt="AZ" class="w-5 h-5">
+                            <span class="text-[#d9dadb] mx-2.5">AZE</span>
+                            <i class="chevron fa-solid fa-chevron-down text-[#d9dadb]"></i>  
+                        </div>
+                        <ul class="dropdown-menu absolute bottom-full mb-2 z-50 mt-2 w-full bg-[#dbd9d9] border-0 rounded-lg cursor-pointer hidden">
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/az-flag.svg" alt="AZE" class="w-5 h-5 mr-2">AZE
+                            </li>
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/en-flag.svg" alt="EN" class="w-5 h-5 mr-2">EN
+                            </li>
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/ru-flag.svg" alt="RU" class="w-5 h-5 mr-2">RU
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main></main>

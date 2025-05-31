@@ -41,3 +41,51 @@ loadData().then(() => {
     </div>
   `;
 });
+
+
+
+
+
+
+
+
+
+const dropdown = document.getElementById("dropdown");
+const dropdown_menu = document.getElementById("dropdown_menu");
+const chevron = document.getElementById("chevron");
+const copy = document.getElementById("copy");
+const lang = document.getElementById("lang");
+const hamburger = document.getElementById('hamburger');
+const overlay = document.getElementById('menuOverlay');
+const burgerMenu = document.getElementById('burgerMenu');
+
+const languages = [`<i>Dil</i>`, 'AZ', 'EN', 'RU'];
+
+function rotateChevron(div) {
+  const dropdownMenu = div.querySelector(".dropdown-menu");
+  const chevron = div.querySelector(".chevron");
+  if (dropdownMenu) dropdownMenu.classList.toggle("hidden");
+  if (chevron) chevron.classList.toggle("rotate-180");
+}
+
+hamburger.onclick = function OpenMenu() {
+  hamburger.style.display = 'none';
+  overlay.classList.remove('hidden');
+  burgerMenu.classList.remove('translate-y-full');
+}
+
+overlay.onclick = function() {
+  hamburger.style.display = 'flex';
+  overlay.classList.add('hidden');
+  burgerMenu.classList.add('translate-y-full');
+};
+
+
+
+copy.innerHTML = `&copy; Park Cinema, ${new Date().getFullYear()}`
+
+
+
+
+
+
