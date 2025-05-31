@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Park Cinema</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="output.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #373737;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: #d52b1e;
+                border-radius: 4px;
+            } 
+            body {
+                font-family: 'Fira sans', sans-serif;
+                background-color: #373737;
+            }
+            .container {
+                max-width: 100vw;
+                padding:30px 20px;
+            }
+            .text-red {
+                color: #86322a;
+            }
+            .bg-red {
+                background-color: #86322a;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav class="container w-full flex items-center max-sm:justify-center sm:justify-center md:justify-between ">    
+                <div class="flex items-center lg:space-x-[10vw] md:space-x-[5vw]">
+                    <a href="#"><img src="../img/logo.svg" class="h-[40px]" alt="logo" id="logo"></a>
+                    <ul class="max-sm:hidden sm:hidden md:flex">
+                        <li class="lg:px-6 md:px-3 hover:text-[#d52b1e] text-[#d9dadb] transition-colors"><a href="#">Kinoteatrlar</a></li>
+                        <li class="lg:px-6 md:px-3 hover:text-[#d52b1e] text-[#d9dadb] transition-colors"><a href="#">Aksiyalar</a></li>
+                        <li class="lg:px-6 md:px-3 hover:text-[#d52b1e] text-[#d9dadb] transition-colors"><a href="#">FAQ</a></li>
+                        <li class="lg:px-6 md:px-3 hover:text-[#d52b1e] text-[#d9dadb] transition-colors"><a href="#">Əlaqə</a></li>
+                        <li class="lg:px-6 md:px-3 hover:text-[#d52b1e] text-[#d9dadb] transition-colors"><a href="#">Profil</a></li>
+                    </ul>
+                </div>
+                <div id="language_switcher" class="max-sm:hidden sm:hidden md:flex">
+                    <div onclick="rotateChevron(this)" class="relative inline-block text-left">
+                        <div class="dropdown flex items-center cursor-pointer">
+                            <img src="../img/az-flag.svg" alt="AZ" class="w-5 h-5">
+                            <span class="text-[#d9dadb] mx-2.5">AZE</span>
+                            <i class="chevron fa-solid fa-chevron-down text-[#d9dadb]"></i>  
+                        </div>
+                        <ul class="dropdown-menu absolute mt-2 w-full bg-[#dbd9d9] border-0 rounded-lg cursor-pointer hidden">
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/az-flag.svg" alt="AZE" class="w-5 h-5 mr-2">AZE
+                            </li>
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/en-flag.svg" alt="EN" class="w-5 h-5 mr-2">EN
+                            </li>
+                            <li class="flex items-center px-3 py-2">
+                                <img src="../img/ru-flag.svg" alt="RU" class="w-5 h-5 mr-2">RU
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main></main>
+
+        <footer class="container bg-red text-[#d9dadb] .pb-10 ">
+            <div id="info" class="flex max-md:flex-col max-md:space-y-10 max-md:items-center md:flex-row justify-between  md:align-items-start">
+                <div id="park">
+                    <img src="../img/logo.svg" alt="logo" class="h-[50px]">
+                </div>
+                <div class="flex max-sm:flex-col max-sm:items-center sm:flex-row max-md:justify-evenly max-md:w-full md:space-x-[30%] lg:space-x-[45%]">
+                    <ul id="pages1" class="max-sm:text-center max-sm:space-y-3 max-sm:mb-3">
+                        <li><a href="#">Kinoteatrlar</a></li>
+                        <li><a href="#">Aksiyalar</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                    <ul id="pages2" class="max-sm:text-center max-sm:space-y-3">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Əlaqə</a></li>
+                        <li><a href="#">Hüquqi şərtlər</a></li>
+                    </ul>
+                </div>
+                <div id="social" class="flex flex-col justify-center items-center">
+                    <p>Bizi izləyin</p>
+                    <div id="icons" class="flex max-sm:flex-wrap justify-center text-[#d52b1e] text-xl">
+                        <a href="https://www.instagram.com/parkcinema/" target="_blank">
+                            <div class="bg-white w-10 h-10 rounded-full m-2 flex items-center justify-center">
+                                <i class="fa-brands fa-instagram text-2xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://www.facebook.com/ParkCinema" target="_blank">
+                            <div class="bg-white w-10 h-10 rounded-full m-2 flex items-center justify-center">
+                                <i class="fa-brands fa-facebook-f text-2xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/@ParkCinemaAzerbaijan" target="_blank">
+                            <div class="bg-white w-10 h-10 rounded-full m-2 flex items-center justify-center">
+                                <i class="fa-brands fa-youtube text-2xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://t.me/parkcinemaofficial" target="_blank">
+                            <div class="bg-white w-10 h-10 rounded-full m-2 flex items-center justify-center">
+                                <i class="fa-brands fa-telegram text-2xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://www.tiktok.com/@parkcinema.az?_t=ZS-8u4JT5RcwdE&_r=1" target="_blank">
+                            <div class="bg-white w-10 h-10 rounded-full m-2 flex items-center justify-center">
+                                <i class="fa-brands fa-tiktok text-2xl"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <img class="mb-5" src="../img/Visa.svg" alt="visa">
+            </div>
+            <div class="flex max-md:flex-col max-md:space-y-5 max-md:justify-center max-md:items-center md:flex-row md:justify-between">
+                <p id="copy"></p>
+                <a href="https://www.esam-innovations.com/" target="_blank">ESAM Innovations</a>
+            </div>   
+        </footer>
+
+        <script src="scriptDetails.js"></script>
+    </body>
+</html>
