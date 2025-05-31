@@ -151,17 +151,9 @@ function goToDetails(id) {
   window.location.href = `details.htm?id=${id}`;
 }
 
-function testImg() {
-  data.forEach(film => {
-  console.log(film.name)
-  console.log(film.firstScreeningDate)
-  console.log(new Date(film.firstScreeningDate).toLocaleDateString('ru-RU'))
-  });
-}
 
 loadData().then(() => {
   data.pop()
-  // testImg()
   filmCards()
 });
 
