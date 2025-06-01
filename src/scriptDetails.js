@@ -57,10 +57,15 @@ function formatDuration(minutes) {
   return `${hrs}:${mins}:00`;
 }
 
+function getEmbedUrl(url) {
+  return `https://www.youtube.com/embed/${url.match(/v=([^&]+)/)[1]}`;
+}
+
+
+
 const params = new URLSearchParams(window.location.search);
 const filmId = params.get("id");
 console.log(filmId)
-
 
 let data = [];
 
@@ -86,7 +91,6 @@ loadData().then(() => {
 
   filmInfo.innerHTML = `
     <div class="text-white space-y-6">
-    
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
         <div class="lg:col-span-1 flex justify-center">
@@ -111,14 +115,11 @@ loadData().then(() => {
           <p><strong>Nümayiş Tarixi:</strong> ${new Date(film.firstScreeningDate).toLocaleDateString('ru-RU')}</p>
         </div>
 
-        <!-- YouTube Trailer: 50% -->
         <div class="lg:col-span-2">
-          <iframe class="w-full h-64 rounded-lg" src="${film.youtubeUrl}" frameborder="0" allowfullscreen></iframe>
+          <iframe class="w-full h-64 rounded-lg" src="${getEmbedUrl(film.youtubeUrl)}" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <!-- Description: spans poster + info (50%) -->
         <div class="lg:col-span-2 mt-4">
-          <h2 class="text-2xl font-semibold mb-2">Məzmun</h2>
           <p class="leading-relaxed">${film.description}</p>
         </div>
 
