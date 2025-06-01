@@ -51,7 +51,11 @@ const wordToNumber = {
   TWENTY: 20,
 };
 
-
+function formatDuration(minutes) {
+  const hrs = String(Math.floor(minutes / 60)).padStart(2, '0');
+  const mins = String(minutes % 60).padStart(2, '0');
+  return `${hrs}:${mins}:00`;
+}
 
 const params = new URLSearchParams(window.location.search);
 const filmId = params.get("id");
@@ -78,9 +82,57 @@ loadData().then(() => {
   const film = data.find(f => f.id === filmId);
   console.log("Film:", film);
 
-  const filmContainer = document.getElementById('filmContainer');
+  const filmInfo = document.getElementById('filmInfo');
 
-  filmContainer.innerHTML = ``
+  filmInfo.innerHTML = `
+    <div class="text-white space-y-6">
+    
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <div class="lg:col-span-1 flex justify-center">
+          <img class="rounded-xl shadow-lg w-60" src="../img/${film.image}" alt="Movie Poster">
+        </div>
+
+        <div class="lg:col-span-1 space-y-2">
+          <h1 class="text-3xl font-bold">${film.name}</h1>
+          <p><strong>Janr:</strong> ${film.genres.map(g => g.title).join(', ')}</p>
+          <p><strong>Dil:</strong> ${film.languages.map(lang => `
+            <img src="../img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
+          </p>
+          <p><strong>Altyazı:</strong> ${film.subtitles.map(lang => `
+            <img src="../img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
+          </p>
+          <p><strong>Müddət:</strong> ${formatDuration(film.duration)}</p>
+          <p><strong>İl:</strong> ${film.year}</p>
+          <p><strong>Ölkə:</strong> ${film.country}</p>
+          <p><strong>Rejissor:</strong> ${film.director}</p>
+          <p><strong>Aktyorlar:</strong> ${film.actors.join(', ')}</p>
+          <p><strong>Yaş Həddi:</strong> ${wordToNumber[film.ageLimit.toUpperCase()]}+</p>
+          <p><strong>Nümayiş Tarixi:</strong> ${new Date(film.firstScreeningDate).toLocaleDateString('ru-RU')}</p>
+        </div>
+
+        <!-- YouTube Trailer: 50% -->
+        <div class="lg:col-span-2">
+          <iframe class="w-full h-64 rounded-lg" src="${film.youtubeUrl}" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Description: spans poster + info (50%) -->
+        <div class="lg:col-span-2 mt-4">
+          <h2 class="text-2xl font-semibold mb-2">Məzmun</h2>
+          <p class="leading-relaxed">${film.description}</p>
+        </div>
+
+        <!-- Empty cell under YouTube -->
+        <div class="lg:col-span-2"></div>
+
+      </div>
+    </div>
+  `;
+
+
+
+
+
 
 
 });
