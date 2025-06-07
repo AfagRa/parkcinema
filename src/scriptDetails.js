@@ -61,6 +61,15 @@ function getEmbedUrl(url) {
   return `https://www.youtube.com/embed/${url.match(/v=([^&]+)/)[1]}`;
 }
 
+function formatSubtitle(subtitle) {
+    return subtitle === 'RU' ? 'Rus' :
+           subtitle === 'AZ' ? 'Aze' :
+           subtitle === 'EN' ? 'Eng' : 'No';
+  }
+
+function goToTicket(id) {
+  window.location.href = `ticket.htm?id=${id}`;
+}
 
 
 const params = new URLSearchParams(window.location.search);
@@ -68,6 +77,7 @@ const filmId = params.get("id");
 console.log(filmId)
 
 let data = [];
+let detailsData = []
 
 function loadData() {
   return fetch('https://parkcinema-data-eta.vercel.app/landing')
@@ -76,6 +86,18 @@ function loadData() {
       data = json;
       console.log('Data is loaded!');
       console.log(data);
+      return fetch(`https://parkcinema-data-eta.vercel.app/detail`);
+    })
+    .then(sessionDataRes => sessionDataRes.json())
+    .then(sessionData => {
+      console.log("Raw sessionData:", sessionData);
+      for (const elm of sessionData) {
+        if (elm.movie?.id === filmId) {
+          detailsData = elm;
+          console.log('Details data is loaded!', detailsData);
+          break;
+        }
+      }
     })
     .catch(err => console.error('Fetch error:', err));
 }
@@ -85,19 +107,18 @@ loadData().then(() => {
   data.pop();
   
   const film = data.find(f => f.id === filmId);
-  console.log("Film:", film);
 
   const filmInfo = document.getElementById('filmInfo');
 
   filmInfo.innerHTML = `
     <div class="text-white space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-        <div class="lg:col-span-1 flex justify-center">
-          <img class="rounded-xl shadow-lg w-60" src="../img/${film.image}" alt="Movie Poster">
+        <div class="max-lg:hidden lg:col-span-1 max-md:order-3 shrink h-auto flex justify-center">
+          <img class="shrink w-full rounded-xl shadow-lg" src="../img/${film.image}" alt="Movie Poster">
         </div>
 
-        <div class="lg:col-span-1 space-y-2">
+        <div class="md:col-span-1 space-y-2 max-md:order-2">
           <h1 class="text-3xl font-bold">${film.name}</h1>
           <p><strong>Janr:</strong> ${film.genres.map(g => g.title).join(', ')}</p>
           <p><strong>Dil:</strong> ${film.languages.map(lang => `
@@ -115,33 +136,96 @@ loadData().then(() => {
           <p><strong>Nümayiş Tarixi:</strong> ${new Date(film.firstScreeningDate).toLocaleDateString('ru-RU')}</p>
         </div>
 
-        <div class="lg:col-span-2">
-          <iframe class="w-full h-64 rounded-lg" src="${getEmbedUrl(film.youtubeUrl)}" frameborder="0" allowfullscreen></iframe>
+        <div class="md:col-span-2 max-md:order-1">
+          <iframe class="w-full h-80 rounded-lg" src="${getEmbedUrl(film.youtubeUrl)}" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <div class="lg:col-span-2 mt-4">
+        <div class="md:col-span-2 mt-4 max-md:order-4">
           <p class="leading-relaxed">${film.description}</p>
         </div>
 
-        <!-- Empty cell under YouTube -->
-        <div class="lg:col-span-2"></div>
+        <div class="md:col-span-2"></div>
 
       </div>
     </div>
   `;
 
+  const sliderWrapper = document.getElementById("sliderWrapper");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const scrollStep = 120;
+
+  prevBtn.addEventListener("click", () => {
+    sliderWrapper.scrollBy({ left: -scrollStep, behavior: "smooth" });
+  });
+
+  nextBtn.addEventListener("click", () => {
+    sliderWrapper.scrollBy({ left: scrollStep, behavior: "smooth" });
+  });
 
 
+  const generateDates = (days = 7) => {
+    const today = new Date();
+    const dates = [];
+
+    for (let i = 0; i < days; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push({
+        day: date.getDate(),
+        month: date.toLocaleString("default", { month: "long" })
+      });
+    }
+
+    return dates;
+  };
+
+  const renderDates = () => {
+    const dates = generateDates();
+    dates.forEach(({ day, month }) => {
+      const card = document.createElement("div");
+      card.className = "w-[60px] h-[90px] p-1 bg-[#474747] flex flex-col items-center text-white rounded-4xl";
+
+      card.innerHTML = `
+        <div class="px-4 py-1 text-sm">${month}</div>
+        <div class="bg-[#606060] rounded-full w-10 h-10 flex justify-center items-center mt-1.5 text-lg font-medium">${day}</div>
+      `;
+
+      sliderWrapper.appendChild(card);
+    });
+  };
+  renderDates()
+
+  const languages = [`<i>Dil</i>`, 'AZ', 'EN', 'RU'];
+  const theaters = [`<i>Kinoteatr</i>`,'Park Bulvar', 'Metro Park', 'Flame Towers', 'Sevinc Mall', 'Shahdag'];
+
+  languages.forEach(elm => {
+    lang.innerHTML += `<li class="flex items-center px-3 py-2">${elm}</li>`;
+  });
+  theaters.forEach(elm => {
+      theater.innerHTML += `<li class="flex items-center px-3 py-2">${elm}</li>`;
+  });
 
 
+  const sessionsContainer = document.getElementById('sessionsContainer');
 
+  sessionsContainer.innerHTML += `
+    <div class="flex justify-between items-center py-2 max-sm:px-2 sm:px-6 md:px-14 max-sm:space-x-2 border-b-2 border-b-white">
+      <div class="text-left">${detailsData.time}</div>
+      <div class="text-left">${detailsData.theatreTitle} | ${detailsData.hallTitle}</div>
+      <div class="flex justify-center"> ${(detailsData.type).slice(1)}
+        <div>
+            <img src="../img/${detailsData.language.toLowerCase()}-flag.svg" alt="${detailsData.language} flag" class="w-5 h-5 inline-block mx-1" />
+        </div>
+      </div>
+      <div id="subtitles" class="text-center border border-white p-1 rounded-lg text-white w-[50px]">
+          <h5 class="m-0 max-sm:text-xs sm:text-sm">${formatSubtitle(detailsData.subtitle)}</h5>
+          <span class="m-0 text-xs">sub</span>
+      </div>
+      <div class="text-right">
+        <button onclick="goToTicket('${detailsData.id}')" class="bg-[#803131] hover:bg-red-700 text-white py-3 max-sm:px-4 sm:px-10 rounded-3xl text-sm">Bilet Al</button>
+      </div>
+    </div>
+  `
 
 });
-
-
-
-
-
-
-
-

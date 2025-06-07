@@ -142,50 +142,24 @@
             </div>
         </header>
 
-        <main class="max-w-[100vw] max-sm:px-[15px] sm:px-[30px] md:px-[50px] py-[20px]">
-            <div id="filmInfo" class=" flex flex-col sm:flex-row gap-10"></div>
-            
-            <div id="filters" class=" flex flex-col md:flex-row justify-between items-center gap-x-5">
-                
-                <div id="dateSlider" class="max-md:w-[100%] md:w-[50%] py-6 flex justify-center items-center">     
-                    <div class="w-full max-w-4xl px-4 relative flex justify-center items-center">
-                        <button id="prevBtn" class="absolute left-0 z-10 text-white p-2">
-                            <i class="fas fa-chevron-left text-xl"></i>
-                        </button>
-                        
-                        <div id="sliderWrapper" class="flex max-sm:gap-x-5 sm:gap-x-10 lg:gap-x-16 overflow-x-auto scroll-smooth no-scrollbar px-10"></div>
-                        
-                        <button id="nextBtn" class="absolute right-0 z-10 text-white p-2">
-                            <i class="fas fa-chevron-right text-xl"></i>
-                        </button>
-                    </div>
+        <main class="max-w-[100vw] max-sm:px-[15px] sm:px-[30px] md:px-[50px] py-[30px] line-">
+            <h2 class="text-white text-2xl">Oturacaq Seçimi</h2>
+            <div id="cover" class="rounded-2xl space-x-32 my-5 h-[250px] text-white text-lg p-4 flex items-center"
+            style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/movie-herobg.svg') center / cover no-repeat; ">
+                <div class="h-full">
+                    <img src="../img/1741687202420_Screenshot_2025-03-10_223056.png" class="h-full" alt="">
                 </div>
-
-                <div class="flex items-center justify-between max-md:w-[100%] max-md:gap-x-8 md:w-[50%]">
-                    <div class="max-md:w-[50%] max-md:flex-1/2 md:flex-1/4 text-center md:mr-8 ">
-                        <div onclick="rotateChevron(this)" class="relative inline-block text-center w-[100%] border-b border-white">
-                            <div class="flex justify-between items-center cursor-pointer">
-                                <span class="text-[#d9dadb] mx-2.5"><i>Dil</i></span>
-                                <i class="chevron fa-solid fa-chevron-down text-[#d9dadb] transition-transform duration-300"></i>  
-                            </div>
-                            <ul id="lang" class="z-50 dropdown-menu absolute mt-2 w-full bg-[#8C8989] border-0 rounded-lg cursor-pointer hidden"></ul>
-                        </div>
-                    </div>
-
-                    <div class="max-md:w-[50%] max-md:flex-1/2 md:flex-1/4 my-3 max-sm:ml-0 max-md:ml-8 text-center border-b border-white">
-                        <div onclick="rotateChevron(this)" class="relative inline-block text-center w-[100%]">
-                            <div class="flex justify-between items-center cursor-pointer">
-                                <span class="text-[#d9dadb] mx-2.5"><i>Kinoteatr</i></span>
-                                <i class="chevron fa-solid fa-chevron-down text-[#d9dadb] transition-transform duration-300"></i>  
-                            </div>
-                            <ul id="theater" class="z-50 dropdown-menu absolute mt-2 w-full bg-[#8C8989] border-0 rounded-lg cursor-pointer hidden"></ul>
-                        </div>
-                    </div>
+                <div class="text-white flex flex-col text-[16px] leading-2">
+                    <h3>Patrul</h3>
+                    <p>2d</p>
+                    <p>0105 2025</p>
+                    <p>00:20</p>
+                    <p>dil rus</p>
+                    <p>Kinoteatr 28 May</p>
+                    <p>zal 4</p>
+                    <p>muddet 02 50 00</p>
                 </div>
-
             </div>
-
-            <div id="sessionsContainer" class=" space-y-2 text-white max-sm:text-xs sm:text-sm"></div>
         </main>
 
         <footer class="container bg-red text-[#d9dadb] .pb-10 ">
