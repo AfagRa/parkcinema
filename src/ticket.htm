@@ -43,11 +43,11 @@
                 -ms-overflow-style: none;
                 scrollbar-width: none;
             }
-            #seat-content::-webkit-scrollbar-track {
+            #seat-content::-webkit-scrollbar-track, #scroll-wrapper::-webkit-scrollbar-track {
                 background: #f0f0f0; 
             }
 
-            #seat-content::-webkit-scrollbar-thumb {
+            #seat-content::-webkit-scrollbar-thumb, #scroll-wrapper::-webkit-scrollbar-thumb {
                 background-color: #999999; 
                 border-radius: 4px;
             }
@@ -154,12 +154,12 @@
 
         <main class="max-w-[100vw] max-sm:px-[15px] sm:px-[30px] md:px-[50px] py-[30px] line-">
             <h2 class="text-white text-2xl">Oturacaq Seçimi</h2>
-            <div id="cover" class="rounded-2xl space-x-32 my-5 h-[280px] text-white text-lg p-4 flex items-center"
+            <div id="cover" class="rounded-2xl space-x-32 my-5 h-[280px] text-white p-4 flex items-center"
                 style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/movie-herobg.svg') center / cover no-repeat; ">
             </div>
 
             <div class="flex justify-between items-center text-white">
-                <div class="flex text-white text-lg space-x-10">
+                <div class="flex flex-wrap text-white text-sm md:text-lg space-x-3 space-y-3 sm:space-x-5 md:space-x-10 mr-4">
                     <h3 class="flex justify-center items-center"><span class="inline-block w-[20px] h-[20px] bg-white rounded-full p-1 mx-2"></span>Mövcuddur</h3>
                     <h3 class="flex justify-center items-center"><span class="inline-block w-[20px] h-[20px] bg-black rounded-full p-1 mx-2"></span>Tutulmuş</h3>
                     <h3 class="flex justify-center items-center"><span class="inline-block w-[20px] h-[20px] bg-red-600 rounded-full p-1 mx-2"></span>Seçilmiş</h3>
@@ -181,22 +181,24 @@
                     </div>
                 </div>
 
-                <div id="seat-content" class="absolute top-20 left-20 w-[85%] h-[85%] overflow-auto rounded-md p-4 bg-[#4D4D4D]">
-                    <div id="seat-wrapper" class="w-full">
-                        <div id="seat-container" class="space-y-1 origin-top-left transition-transform duration-200 ease-in-out">
-                        </div>
+                <div id="scroll-wrapper" class="overflow-auto w-full h-full mt-10 mr-4">
+                    <div id="seat-content" class="w-[990px] h-[85%] overflow-auto rounded-md p-4 bg-[#4D4D4D] min-w-[990px]">
+                        <div id="seat-wrapper" class="w-full">
+                            <div id="seat-container" class="space-y-1 origin-top-left transition-transform duration-200 ease-in-out">
+                            </div>
 
-                        <div id="screen" class="w-[720px] mt-12 ml-[74px] flex flex-col items-center justify-center">
-                        <p class="text-white text-2xl">Ekran</p>
-                        <img src="../img/screen.svg" class="w-full" alt="screen">
+                            <div id="screen" class="w-[700px] mt-12 ml-[74px] flex flex-col items-center justify-center">
+                            <p class="text-white text-2xl">Ekran</p>
+                            <img src="../img/screen.svg" class="w-full" alt="screen">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="seatsInfo" class="mt-6 text-white text-md"></div>
-
-
+            <div id="seatsInfoWrapper" class="flex flex-row justify-between items-top">
+                <div id="seatsInfo" class="mt-6 text-white text-md "></div>
+            </div>
 
         </main>
 

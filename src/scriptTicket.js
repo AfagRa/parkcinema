@@ -106,8 +106,8 @@ loadData().then(() => {
     <div class="h-full">
       <img src="../img/${film.movie.image}" class="h-full" alt="${film.movie.name}">
     </div>
-    <div class="text-white flex flex-col text-lg leading-[1.8]">
-      <h3 class="text-xl">${film.movie.name}</h3>
+    <div class="text-white flex flex-col text-sm sm:text-lg leading-[1.8]">
+      <h3 class="text-md sm:text-xl">${film.movie.name}</h3>
       <p>${film.type.slice(1)}</p>
       <p><i class="fa-solid fa-calendar mr-3"></i>${new Date(film.movie.firstScreeningDate).toLocaleDateString('ru-RU')}</p>
       <p><i class="fa-solid fa-clock mr-3"></i>${film.time}</p>
@@ -158,7 +158,7 @@ loadData().then(() => {
       if (show) {
         const seat = document.createElement('div');
         seat.innerText = x;
-        seat.className = 'bg-[#C7C7C7] text-black rounded p-1 text-sm text-center w-8';
+        seat.className = 'cursor-pointer bg-[#C7C7C7] text-black rounded p-1 text-sm text-center w-8';
         seat.id = `r${rowNum}s${x}`;
         seat.onclick = () => selectSeat(seat.id);
         row.appendChild(seat);
@@ -178,149 +178,168 @@ loadData().then(() => {
   });
 
 
-
-
-
-
-
-
-
   let aileMode = false;
-let aileSeats = [];
-let aileDropdownUsed = false;
-let selectedSeats = []; 
+  let aileDropdownUsed = false;
+  let selectedSeats = []; 
 
-let lastDropdown = null;
-let lastOrangeSeat = null;
-let optionChosen = false;
+  let lastDropdown = null;
+  let lastOrangeSeat = null;
+  let optionChosen = false;
+  let aileCount = 0;
 
-const seatsInfoDiv = document.getElementById('seatsInfo');
+  const seatsInfoDiv = document.getElementById('seatsInfo');
 
-function selectSeat(seatId) {
-  console.log('Selected seat:', seatId);
-  const seat = document.getElementById(seatId);
+  function selectSeat(seatId) {
+    console.log('Selected seat:', seatId);
+    const seat = document.getElementById(seatId);
 
-  if (lastDropdown) {
-    lastDropdown.remove();
+    const index = selectedSeats.findIndex(s => s.id === seatId)
 
-    if (!optionChosen && lastOrangeSeat) {
-      lastOrangeSeat.classList.remove('bg-orange-500');
+    if (index != -1) {
+      selectedSeats.splice(index, 1); 
+      seat.classList.remove('bg-red-500', 'text-white'); 
+      seat.classList.add('bg-[#C7C7C7]', 'text-black'); 
+      removeDropdown(); 
+      updateSeatInfo(); 
+      return;
     }
 
-    lastDropdown = null;
-    lastOrangeSeat = null;
-    optionChosen = false;
-  }
+    if (aileMode && aileCount < 4) {
+      if (aileMode && aileCount < 4) {
+      seat.classList.remove('bg-[#C7C7C7]');
+      seat.classList.add('bg-red-500');
+      markSelected(seatId, 'Ailə');
+      aileCount++;
+      }
+      if (aileCount == 4) {
+        aileMode = false;
+        aileDropdownUsed = true;
+      }
 
-  // Set new seat to orange and show dropdown
-  seat.classList.add('bg-orange-500');
+      updateSeatInfo();
+      return;
+    }
 
-  const dropdown = document.createElement('div');
-  dropdown.className = 'dropdown-menu absolute h-[40px] w-[60px] bg-white bg-opacity-70 rounded shadow-md flex flex-col justify-center items-center z-50 text-xs';
-  dropdown.style.top = seat.offsetTop + seat.offsetHeight + 'px';
-  dropdown.style.left = seat.offsetLeft + seat.offsetWidth / 2 - 30 + 'px';
+    removeDropdown();
 
-  if (!aileDropdownUsed) {
+    seat.classList.add('bg-[#FF9C0E]');
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'dropdown-menu p-0 absolute w-[60px] bg-[#ffffffca] rounded flex flex-col text-center justify-evenly z-50 text-sm';
+    dropdown.style.top = seat.offsetTop + seat.offsetHeight + 'px';
+    dropdown.style.left = seat.offsetLeft + seat.offsetWidth / 2 - 30 + 'px';
+
+    if (!aileDropdownUsed) {
     const aileDiv = document.createElement('div');
     aileDiv.innerText = 'Ailə';
-    aileDiv.className = 'hover:font-bold cursor-pointer';
+    aileDiv.className = 'cursor-pointer flex justify-center items-center h-[40px] text-center hover:bg-red-500 hover:text-white px-1 rounded';
     aileDiv.onclick = () => {
       chooseAile(seatId, dropdown);
+      removeDropdown();
       optionChosen = true;
     };
     dropdown.appendChild(aileDiv);
   }
 
-  const boyukDiv = document.createElement('div');
-  boyukDiv.innerText = 'Böyük';
-  boyukDiv.className = 'hover:font-bold cursor-pointer';
-  boyukDiv.onclick = () => {
-    chooseBoyuk(seatId, dropdown);
-    optionChosen = true;
-  };
-  dropdown.appendChild(boyukDiv);
-
-  seatContainer.appendChild(dropdown);
-
-  // Remember current dropdown state
-  lastDropdown = dropdown;
-  lastOrangeSeat = seat;
-}
-
-function chooseAile(startId, dropdown) {
-  aileMode = true;
-  aileSeats = [startId];
-  dropdown.remove();
-
-  const startSeat = document.getElementById(startId);
-  startSeat.classList.remove('bg-orange-500');
-  startSeat.classList.add('bg-red-500');
-  markSelected(startId, 'Ailə');
-  updateSeatInfo();
-
-  document.querySelectorAll('#seat-container .bg-[#C7C7C7]').forEach(seat => {
-    seat.onclick = () => {
-      const id = seat.id;
-      if (!aileMode || aileSeats.includes(id) || aileSeats.length >= 4) return;
-
-      if (isAdjacent(id, aileSeats[aileSeats.length - 1])) {
-        aileSeats.push(id);
-        seat.classList.remove('bg-[#C7C7C7]');
-        seat.classList.add('bg-red-500');
-        markSelected(id, 'Ailə');
-        updateSeatInfo();
-
-        if (aileSeats.length === 4) {
-          aileMode = false;
-          aileDropdownUsed = true;
-        }
-      }
+    const boyukDiv = document.createElement('div');
+    boyukDiv.innerText = 'Böyük';
+    boyukDiv.className = 'cursor-pointer flex justify-center items-center h-[40px] text-center hover:bg-red-500 hover:text-white px-1 rounded';
+    boyukDiv.onclick = () => {
+      chooseBoyuk(seatId, dropdown);
+      removeDropdown();
+      optionChosen = true;
     };
-  });
-}
+    dropdown.appendChild(boyukDiv);
 
-function chooseBoyuk(seatId, dropdown) {
-  const seat = document.getElementById(seatId);
-  seat.classList.remove('bg-orange-500');
-  seat.classList.add('bg-red-500');
-  dropdown.remove();
+    seatContainer.appendChild(dropdown);
 
-  markSelected(seatId, 'Böyük');
-  updateSeatInfo();
-}
+    lastDropdown = dropdown;
+    lastOrangeSeat = seat;
+    optionChosen = false;
+  }
 
-function markSelected(seatId, type) {
-  if (selectedSeats.some(s => s.id === seatId)) return;
+  function chooseAile(seatId, dropdown) {
+    const seat = document.getElementById(seatId);
+    seat.classList.remove('bg-[#C7C7C7]');
+    seat.classList.add('bg-red-500');
 
-  const [row, num] = seatId.match(/r(\d+)s(\d+)/).slice(1).map(Number);
-  selectedSeats.push({ id: seatId, row, num, type });
-}
+    markSelected(seatId, 'Ailə');
+    aileCount++;
 
-function updateSeatInfo() {
-  seatsInfoDiv.innerHTML = '';
+    if (aileCount === 1) {
+      aileMode = true; 
+    }
 
-  let total = 0;
-  selectedSeats.forEach(seat => {
-    const p = document.createElement('p');
-    p.innerText = `Sıra ${seat.row}, Yer ${seat.num} (${seat.type})`;
-    seatsInfoDiv.appendChild(p);
-    total += seat.type === 'Ailə' ? 7 : 8;
-  });
+    if (aileCount === 4) {
+      aileDropdownUsed = true;
+      aileMode = false;
+    }
 
-  const totalDiv = document.createElement('p');
-  totalDiv.className = 'font-bold mt-2';
-  totalDiv.innerText = `Ümumi: ${total} AZN`;
-  seatsInfoDiv.appendChild(totalDiv);
-}
+    updateSeatInfo();
+  }
 
-function isAdjacent(id1, id2) {
-  const [r1, s1] = id1.match(/r(\d+)s(\d+)/).slice(1).map(Number);
-  const [r2, s2] = id2.match(/r(\d+)s(\d+)/).slice(1).map(Number);
-  return r1 === r2 && Math.abs(s1 - s2) === 1;
-}
+  function chooseBoyuk(seatId, dropdown) {
+    const seat = document.getElementById(seatId);
+    seat.classList.remove('bg-orange-500');
+    seat.classList.add('bg-red-500');
 
+    markSelected(seatId, 'Böyük');
+    updateSeatInfo();
+  }
 
+  function markSelected(seatId, type) {
+    for (let i = 0; i < selectedSeats.length; i++) {
+      if (selectedSeats[i].id == seatId) return;
+    }
+    const [row, num] = seatId.match(/r(\d+)s(\d+)/).slice(1).map(Number);
+    selectedSeats.push({ id: seatId, row, num, type });
+  }
+
+  function updateSeatInfo() {
+    seatsInfoDiv.innerHTML = '';
+
+    let total = 0;
+    selectedSeats.forEach(seat => {
+      const p = document.createElement('p');
+      p.innerText = `Sıra ${seat.row}, Yer ${seat.num} (${seat.type})`;
+      seatsInfoDiv.appendChild(p);
+      total += seat.type == 'Ailə' ? 7 : 8;
+    });
+
+    const existingButton = seatsInfoWrapper.querySelector('button');
+
+    if (selectedSeats.length == 0) {
+      if (existingButton) existingButton.remove();
+      return;
+    }
+
+    const totalDiv = document.createElement('p');
+    totalDiv.className = 'font-bold mt-2';
+    totalDiv.innerText = `Ümumi: ${total} AZN`;
+    seatsInfoDiv.appendChild(totalDiv);
+
+    if (!existingButton) {
+      const button = document.createElement('button');
+      button.id = 'buyTicketButton';
+      button.innerText = 'Bilet al';
+      button.className = 'h-[50px] bg-red-500 text-white text-xl px-6 sm:px-10 py-2 rounded-full mt-4 hover:bg-red-600 transition';
+      document.querySelector('#seatsInfoWrapper').appendChild(button);
+    }
+  }
+
+  function removeDropdown() {
+    if (lastDropdown) {
+      lastDropdown.remove();
+
+      if (!optionChosen && lastOrangeSeat) {
+        lastOrangeSeat.classList.remove('bg-[#FF9C0E]');
+      }
+
+      lastDropdown = null;
+      lastOrangeSeat = null;
+      optionChosen = false;
+    }
+  }
 
 
 });
-
