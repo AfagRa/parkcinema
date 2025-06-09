@@ -73,6 +73,7 @@ function goToTicket(id) {
 
 
 const params = new URLSearchParams(window.location.search);
+console.log("Params gorek nedi:", params);
 const filmId = params.get("id");
 console.log(filmId)
 
@@ -84,8 +85,7 @@ function loadData() {
     .then(res => res.json())
     .then(json => {
       data = json;
-      console.log('Data is loaded!');
-      console.log(data);
+      console.log('Data is loaded!', data);
       return fetch(`https://parkcinema-data-eta.vercel.app/detail`);
     })
     .then(sessionDataRes => sessionDataRes.json())
@@ -109,7 +109,6 @@ loadData().then(() => {
   const film = data.find(f => f.id === filmId);
 
   const filmInfo = document.getElementById('filmInfo');
-
   filmInfo.innerHTML = `
     <div class="text-white space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -208,6 +207,9 @@ loadData().then(() => {
 
 
   const sessionsContainer = document.getElementById('sessionsContainer');
+
+  console.log("data niye cixmir ki", detailsData)
+  console.log("gorek teatr cixir", detailsData.theatreTitle)
 
   sessionsContainer.innerHTML += `
     <div class="flex justify-between items-center py-2 max-sm:px-2 sm:px-6 md:px-14 max-sm:space-x-2 border-b-2 border-b-white">
