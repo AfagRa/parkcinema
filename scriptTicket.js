@@ -104,7 +104,7 @@ loadData().then(() => {
 
   cover.innerHTML = `
     <div class="h-full">
-      <img src="../img/${film.movie.image}" class="h-full" alt="${film.movie.name}">
+      <img src="img/${film.movie.image}" class="h-full" alt="${film.movie.name}">
     </div>
     <div class="text-white flex flex-col text-sm sm:text-lg leading-[1.8]">
       <h3 class="text-md sm:text-xl">${film.movie.name}</h3>

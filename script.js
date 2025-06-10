@@ -36,7 +36,7 @@ let x = 0;
 next.onclick = function changeBgImage() {
     x = (x + 1) % bgImages.length; 
     const nextImage = bgImages[x];
-    slider.style.backgroundImage = `linear-gradient(to bottom, #000000e0,#00000067, transparent, #00000067, #000000e0), url('../img/${nextImage}')`;
+    slider.style.backgroundImage = `linear-gradient(to bottom, #000000e0,#00000067, transparent, #00000067, #000000e0), url('img/${nextImage}')`;
 }
 
 list.addEventListener('click', () => {
@@ -125,7 +125,7 @@ function filmCards() {
       <div onclick="goToDetails('${film.id}')" class="rounded-xl overflow-hidden">
         <div class="relative h-[450px] group">
           <div class="absolute inset-0 bg-center bg-cover transition-transform duration-300 group-hover:scale-110"
-                style="background-image: linear-gradient(to top, rgba(0,0,0,0.8) 33%, transparent 100%), url('../img/${film.image}');">
+                style="background-image: linear-gradient(to top, rgba(0,0,0,0.8) 33%, transparent 100%), url('img/${film.image}');">
           </div>
           <div class="relative z-10 h-full flex flex-col justify-end p-4 text-white">
             <h3 class="text-lg font-bold">${film.name}</h3>
@@ -133,7 +133,7 @@ function filmCards() {
             <div class="flex justify-between items-center mt-2">
               <p class="text-s">${wordToNumber[film.ageLimit.toUpperCase()]}+</p>
               <div>
-                ${film.languages.map(lang => `<img src="../img/${lang.toLowerCase()}-flag.svg" alt="${lang} flag" class="w-5 h-5 inline-block mx-1" />`).join('')}
+                ${film.languages.map(lang => `<img src="img/${lang.toLowerCase()}-flag.svg" alt="${lang} flag" class="w-5 h-5 inline-block mx-1" />`).join('')}
               </div>
             </div>
           </div>

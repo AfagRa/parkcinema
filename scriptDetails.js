@@ -114,17 +114,17 @@ loadData().then(() => {
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
         <div class="max-lg:hidden lg:col-span-1 max-md:order-3 shrink h-auto flex justify-center">
-          <img class="shrink w-full rounded-xl shadow-lg" src="../img/${film.image}" alt="Movie Poster">
+          <img class="shrink w-full rounded-xl shadow-lg" src="img/${film.image}" alt="Movie Poster">
         </div>
 
         <div class="md:col-span-1 space-y-2 max-md:order-2">
           <h1 class="text-3xl font-bold">${film.name}</h1>
           <p><strong>Janr:</strong> ${film.genres.map(g => g.title).join(', ')}</p>
           <p><strong>Dil:</strong> ${film.languages.map(lang => `
-            <img src="../img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
+            <img src="img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
           </p>
           <p><strong>Altyazı:</strong> ${film.subtitles.map(lang => `
-            <img src="../img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
+            <img src="img/${lang.toLowerCase()}-flag.svg" class="w-5 h-5 inline-block mx-1" alt="${lang}">`).join('')}
           </p>
           <p><strong>Müddət:</strong> ${formatDuration(film.duration)}</p>
           <p><strong>İl:</strong> ${film.year}</p>
@@ -217,7 +217,7 @@ loadData().then(() => {
       <div class="text-left">${detailsData.theatreTitle} | ${detailsData.hallTitle}</div>
       <div class="flex justify-center"> ${(detailsData.type).slice(1)}
         <div>
-            <img src="../img/${detailsData.language.toLowerCase()}-flag.svg" alt="${detailsData.language} flag" class="w-5 h-5 inline-block mx-1" />
+            <img src="img/${detailsData.language.toLowerCase()}-flag.svg" alt="${detailsData.language} flag" class="w-5 h-5 inline-block mx-1" />
         </div>
       </div>
       <div id="subtitles" class="text-center border border-white p-1 rounded-lg text-white w-[50px]">
