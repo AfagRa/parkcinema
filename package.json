@@ -1,7 +1,8 @@
 {
   "scripts": {
     "buildcss": "tailwindcss -i ./src/input.css -o ./src/output.css",
-    "watchcss": "tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+    "watchcss": "tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.7",
